@@ -10,7 +10,7 @@
 
 - **Monthly buying, weighted by "heat".** Heat = today's price vs. its 200-day average. Very cheap → up to 3× your normal buy. Overheated → skip. Plain DCA buys the same amount whatever the price.
 - **Your coins, your weights.** Any coin Kraken trades against USD, e.g. `BTC:40, ETH:25, SOL:10` - or use the default mix.
-- **Optional profit-taking** in small steps near all-time highs, or **Buy only** mode if you never want it to sell.
+- **Optional profit-taking** in small steps near all-time highs, or **Buy only** mode if you want to set your own sell orders. 
 - **Buy now** button for an extra top-up with the same rules.
 - **A full cockpit:** portfolio with average cost and profit per coin, trade history, manual orders, news.
 
