@@ -1,7 +1,7 @@
 {
- "version": "0.5.1",
- "url": "https://github.com/Duplexsteel/Tradebot/releases/latest",
- "notes": "First beta: setup wizard, licence, update check, server install; profit-taking is opt-in",
- "windows": "https://github.com/Duplexsteel/Tradebot/releases/download/v0.5.1/TradeBot-Setup-0.5.1.exe",
- "server": "https://github.com/Duplexsteel/Tradebot/releases/download/v0.5.1/TradeBot-server-0.5.1.tar.gz"
+ "version": "0.5.2",
+ "url": "https://github.com/Duplexsteel/HeatStack/releases/latest",
+ "notes": "Now called HeatStack - same app, new name",
+ "windows": "https://github.com/Duplexsteel/HeatStack/releases/download/v0.5.2/HeatStack-Setup-0.5.2.exe",
+ "server": "https://github.com/Duplexsteel/HeatStack/releases/download/v0.5.2/HeatStack-server-0.5.2.tar.gz"
 }
