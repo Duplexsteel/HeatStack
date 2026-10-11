@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TradeBot - setup guide</title>
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07090d;--s1:#0c1016;--s2:#11161e;--bd:#1b222c;--tx:#c9d1d9;--hi:#e6edf3;--mu:#7d8999;--ac:#f5a623;--up:#00d27a;--dn:#ff4d5e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.65 Inter,system-ui,sans-serif}
+a{color:var(--ac);text-decoration:none}a:hover{text-decoration:underline}
+.w{max-width:820px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;gap:22px;height:64px;border-bottom:1px solid var(--bd)}
+.brand{font:700 15px "JetBrains Mono",monospace;letter-spacing:2px;color:var(--hi)}.brand b{color:var(--ac)}nav .sp{flex:1}nav a{font-size:14px}
+h1{font-size:38px;color:var(--hi);margin:48px 0 8px;letter-spacing:-.8px}.lead{color:var(--mu);margin:0 0 28px}
+h2{font-size:24px;color:var(--hi);margin:48px 0 12px;padding-top:24px;border-top:1px solid var(--bd)}
+h3{font-size:17px;color:var(--hi);margin:24px 0 8px}
+ol li,ul li{margin:6px 0}code,pre{font:500 14px "JetBrains Mono",monospace}
+code{background:var(--s2);border:1px solid var(--bd);border-radius:4px;padding:1px 6px;color:var(--hi)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:14px 16px;overflow-x:auto;color:var(--hi)}
+.toc{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:16px 22px}.toc ol{margin:0;padding-left:20px}
+.tip{border-left:3px solid var(--ac);background:rgba(245,166,35,.06);padding:10px 16px;border-radius:0 6px 6px 0;margin:16px 0;font-size:15px}
+.warn{border-left:3px solid var(--dn);background:rgba(255,77,94,.06);padding:10px 16px;border-radius:0 6px 6px 0;margin:16px 0;font-size:15px}
+.todo{outline:1px dashed var(--ac);outline-offset:3px}
+footer{border-top:1px solid var(--bd);margin-top:56px;padding:28px 0 48px;color:var(--mu);font-size:13px}
+@media(max-width:700px){h1{font-size:30px}}
+</style></head><body><div class="w">
+<nav><a class="brand" href="index.html"><b>▲</b> TRADEBOT</a><span class="sp"></span><a href="index.html#pricing">Get early access</a></nav>
+
+<h1>Setup guide</h1><p class="lead">From zero to a running bot in about 15 minutes. You start in dry run, so nothing is bought until you say so.</p>
+<div class="toc"><ol><li><a href="#kraken">Create your Kraken API key</a></li><li><a href="#windows">Install on Windows</a></li>
+<li><a href="#dry">Dry run, then go live</a></li><li><a href="#server">Run it 24/7 on a server</a></li><li><a href="#ha">Home Assistant (advanced)</a></li>
+<li><a href="#phone">Open it on your phone</a></li><li><a href="#help">Updates and help</a></li></ol></div>
+
+<h2 id="kraken">1 · Create your Kraken API key</h2>
+<ol><li>Log in at <a href="https://www.kraken.com">kraken.com</a> → <b>Settings → API → Create API key</b>.</li>
+<li>Give it a name like <i>TradeBot</i> and tick exactly these permissions:<br>
+<code>Query Funds</code> <code>Query Open Orders &amp; Trades</code> <code>Query Closed Orders &amp; Trades</code> <code>Query Ledger Entries</code> <code>Create &amp; Modify Orders</code> <code>Cancel/Close Orders</code></li>
+<li>Leave everything else off. Save, and keep the page open - you'll copy the <b>API key</b> and the <b>Private key</b> into TradeBot.</li></ol>
+<div class="warn"><b>Never</b> tick <i>Withdraw Funds</i>. TradeBot tests every key and refuses keys that can withdraw.</div>
+<div class="tip">Use this key only for TradeBot. If another program (a tax tool, another bot) uses the same key, both can fail - Kraken counts requests per key.</div>
+
+<h2 id="windows">2 · Install on Windows</h2>
+<ol><li>Download <b>TradeBot-Setup.exe</b> from the link in your purchase email.</li>
+<li>Run it. Because TradeBot is new, Windows may show <i>"Windows protected your PC"</i>. Click <b>More info → Run anyway</b>.</li>
+<li>TradeBot opens with a short welcome: accept the terms, choose <b>This PC</b>, paste your Kraken key and press <b>Test &amp; save key</b>.</li></ol>
+<p>That's it - the bot runs every hour while TradeBot is open. Orders it already placed stay on Kraken even when your PC is off.</p>
+
+<h2 id="dry">3 · Dry run, then go live</h2>
+<p>New installs start in <b>dry run</b>: the bot reads your balances and shows on the <b>Bot</b> tab what it <i>would</i> buy, but places nothing. Watch a few runs.</p>
+<p>Happy with it? Go to <b>Setup → Strategy</b>, untick <b>Dry run</b> and press Save. In the same place you can:</p>
+<ul><li>pick your own coins and weights, e.g. <code>BTC:40, ETH:25, SOL:10</code> (empty = default mix)</li>
+<li>switch on <b>Buy only</b> if you never want it to sell</li><li>list coins it should never sell</li><li>set over how many months your cash is spread (12 by default)</li></ul>
+<div class="tip">Small budgets: Kraken has a minimum order size per coin. If a coin's monthly share is below it, that buy rolls over to the next month. TradeBot tells you at start-up when this happens.</div>
+
+<h2 id="server">4 · Run it 24/7 on a server</h2>
+<p>A small cloud server (Hetzner, DigitalOcean, Oracle and similar - a few euros a month) keeps the bot running around the clock.</p>
+<ol><li>Create a server with <b>Ubuntu</b> (any recent version). The smallest size is plenty.</li>
+<li>Connect to it (your provider shows the <code>ssh</code> command) and paste:
+<pre>curl -fsSL https://duplexsteel.github.io/Tradebot/install.sh | sudo bash</pre></li>
+<li>When it finishes it prints a command like the one below. Run it <b>on your own PC</b> (Windows Terminal or PowerShell is fine), then open <code>http://127.0.0.1:8765</code> in your browser:
+<pre>ssh -L 8765:127.0.0.1:8765 root@your-server-ip</pre></li>
+<li>The same welcome appears - choose <b>This PC or server</b> and add your key.</li></ol>
+<p>To update later, run the same install command again. Your key and settings stay.</p>
+<div class="tip">The page on the server only listens to the server itself, so nobody on the internet can reach it. The <code>ssh -L</code> tunnel is your private door in.</div>
+
+<h2 id="ha">5 · Home Assistant (advanced)</h2>
+<p>Running Home Assistant OS on a Raspberry Pi or mini PC? TradeBot can run there as an add-on, 24/7, with dashboard tiles.</p>
+<ol class="todo"><li>Home Assistant → <b>Settings → Add-ons → Add-on store → ⋮ → Repositories</b>, add the TradeBot repository URL from your purchase email.</li>
+<li>Install <b>TradeBot</b>, enter your Kraken key in the add-on's <b>Configuration</b>, start it.</li>
+<li>In the TradeBot desktop app choose <b>My Pi / Home Assistant</b> - the app becomes your cockpit for the bot on the Pi.</li></ol>
+
+<h2 id="phone">6 · Open it on your phone</h2>
+<ol><li>In TradeBot: <b>Setup → Advanced → Allow phone access with PIN</b>, choose a PIN, save and restart the app. If Windows asks about the firewall, allow private networks.</li>
+<li>On the same Wi-Fi: open <code>http://&lt;your-PC's-IP&gt;:8765</code> on your phone and enter the PIN.</li>
+<li>Away from home: install the free <a href="https://tailscale.com">Tailscale</a> app on the PC (or server) and on your phone, then use the Tailscale address instead.</li></ol>
+
+<h2 id="help">7 · Updates and help</h2>
+<p>When a new version is out, TradeBot shows a green banner with a download link. Install it over the old one - your settings stay.</p>
+<p>Something wrong? Send us <code>%APPDATA%\TradeBot\crash.log</code> (Windows) or the output of <code>journalctl -u tradebot -n 100</code> (server). They never contain your keys.</p>
+<p class="todo">Contact: support@…</p>
+
+<footer>TradeBot is software, not financial advice. Your money, your risk. · <a href="index.html">Home</a></footer>
+</div></body></html>

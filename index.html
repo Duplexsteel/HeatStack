@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TradeBot - the smarter DCA bot</title>
+<meta name="description" content="TradeBot buys your chosen coins every month - more when prices are cheap, less when they are hot. Runs on your PC, your server or Home Assistant. Your keys, your money, your risk.">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07090d;--s1:#0c1016;--s2:#11161e;--bd:#1b222c;--tx:#c9d1d9;--hi:#e6edf3;--mu:#7d8999;--ac:#f5a623;--up:#00d27a;--dn:#ff4d5e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 Inter,system-ui,sans-serif}
+a{color:var(--ac);text-decoration:none}a:hover{text-decoration:underline}
+.w{max-width:1080px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;gap:22px;height:64px;border-bottom:1px solid var(--bd)}
+.brand{font:700 15px "JetBrains Mono",monospace;letter-spacing:2px;color:var(--hi)}.brand b{color:var(--ac)}
+nav .sp{flex:1}nav a.l{color:var(--mu);font-size:14px}
+.btn{display:inline-block;background:var(--ac);color:#111;font-weight:700;padding:12px 22px;border-radius:6px;font-size:15px}
+.btn:hover{text-decoration:none;filter:brightness(1.08)}.btn.g{background:none;color:var(--hi);border:1px solid var(--bd)}
+.hero{padding:84px 0 64px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+h1{font-size:50px;line-height:1.08;margin:0 0 18px;color:var(--hi);letter-spacing:-1.2px;font-weight:800}
+h1 em{font-style:normal;color:var(--ac)}
+.lead{font-size:19px;color:var(--tx);margin:0 0 28px;max-width:560px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}.note{color:var(--mu);font-size:13px;margin-top:14px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:22px}
+.heat{font:500 14px "JetBrains Mono",monospace}.heat .r{display:grid;grid-template-columns:110px 1fr 54px;gap:12px;align-items:center;margin:9px 0}
+.bar{height:10px;border-radius:5px;background:var(--s2);overflow:hidden}.bar i{display:block;height:100%;border-radius:5px}
+.heat .t{color:var(--mu);font:600 11px Inter;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+section{padding:64px 0;border-top:1px solid var(--bd)}
+h2{font-size:32px;color:var(--hi);margin:0 0 10px;letter-spacing:-.5px}.sub{color:var(--mu);margin:0 0 36px;max-width:640px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card h3{margin:0 0 6px;color:var(--hi);font-size:17px}.card p{margin:0;color:var(--tx);font-size:15px}
+.k{font:700 12px "JetBrains Mono",monospace;color:var(--ac);letter-spacing:1px;margin-bottom:8px;display:block}
+.run .tag{display:inline-block;font:600 11px Inter;letter-spacing:1px;padding:2px 8px;border-radius:4px;border:1px solid var(--bd);color:var(--mu);margin-bottom:10px}
+.run .tag.best{color:var(--up);border-color:rgba(0,210,122,.4)}
+ul.ck{list-style:none;padding:0;margin:12px 0 0}ul.ck li{padding-left:22px;position:relative;margin:6px 0;font-size:15px}
+ul.ck li:before{content:"✓";position:absolute;left:0;color:var(--up);font-weight:700}
+.price{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:820px}
+.price .card.main{border-color:rgba(245,166,35,.5)}.amt{font-size:36px;font-weight:800;color:var(--hi)}.amt span{font-size:15px;color:var(--mu);font-weight:500}
+details{border-bottom:1px solid var(--bd);padding:16px 0}summary{cursor:pointer;color:var(--hi);font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}summary:before{content:"+";color:var(--ac);display:inline-block;width:22px;font-weight:700}
+details[open] summary:before{content:"–"}details p{margin:10px 0 0 22px;color:var(--tx)}
+.risk{background:rgba(255,77,94,.06);border:1px solid rgba(255,77,94,.3);border-radius:10px;padding:20px 22px;font-size:14px}
+.risk b{color:var(--dn)}
+footer{border-top:1px solid var(--bd);padding:32px 0 48px;color:var(--mu);font-size:13px}
+.todo{outline:1px dashed var(--ac);outline-offset:3px}
+@media(max-width:820px){.hero{grid-template-columns:1fr;padding:48px 0 40px;gap:32px}h1{font-size:36px}.g3,.g2,.price{grid-template-columns:1fr}
+ nav a.l{display:none}section{padding:48px 0}h2{font-size:26px}.heat .r{grid-template-columns:90px 1fr 46px}}
+</style></head><body>
+<div class="w">
+<nav><div class="brand"><b>▲</b> TRADEBOT</div><span class="sp"></span>
+  <a class="l" href="#how">How it works</a><a class="l" href="#where">Where it runs</a><a class="l" href="#pricing">Pricing</a><a class="l" href="setup.html">Setup guide</a>
+  <a class="btn" href="#pricing" style="padding:8px 16px;font-size:14px">Get early access</a></nav>
+
+<div class="hero">
+  <div>
+    <h1>Dollar-cost averaging,<br><em>but smarter.</em></h1>
+    <p class="lead">TradeBot buys your chosen coins every month - <b>more when prices are cheap, less when they are hot</b> - on your own Kraken account. Set it up once, then let it work.</p>
+    <div class="cta"><a class="btn" href="#pricing">Get early access</a><a class="btn g" href="#how">How it works</a></div>
+    <p class="note">Your keys stay on your machine. TradeBot never holds your money and can't withdraw it.</p>
+  </div>
+  <div class="card heat">
+    <div class="t">This month's buy, by "heat"</div>
+    <div class="r"><span>Very cheap</span><div class="bar"><i style="width:100%;background:var(--up)"></i></div><b>3×</b></div>
+    <div class="r"><span>Cheap</span><div class="bar"><i style="width:66%;background:var(--up)"></i></div><b>2×</b></div>
+    <div class="r"><span>Normal</span><div class="bar"><i style="width:33%;background:var(--tx)"></i></div><b>1×</b></div>
+    <div class="r"><span>Hot</span><div class="bar"><i style="width:16%;background:var(--ac)"></i></div><b>½×</b></div>
+    <div class="r"><span>Overheated</span><div class="bar"><i style="width:2%;background:var(--dn)"></i></div><b>0</b></div>
+    <p class="note" style="margin:12px 0 0">Heat = today's price vs. its 200-day average. Plain DCA buys the same amount every month, whatever the price.</p>
+  </div>
+</div>
+
+<section id="how">
+  <h2>How it works</h2><p class="sub">Simple rules you can read, check and change. No black box, no hype.</p>
+  <div class="g3">
+    <div class="card"><span class="k">01 · PLAN</span><h3>Your coins, your budget</h3><p>Pick the coins you believe in and their weights (or use the default mix). Your cash is spread over the months you choose - 12 by default.</p></div>
+    <div class="card"><span class="k">02 · BUY</span><h3>Every month, weighted by heat</h3><p>Each month the bot places limit orders slightly below the market. Cheap months get a bigger share, overheated coins get skipped. Deep crashes trigger an extra boost.</p></div>
+    <div class="card"><span class="k">03 · TAKE PROFIT</span><h3>Optional, step by step</h3><p>Near all-time highs it can sell small slices on the way up - or switch on <b>Buy only</b> and it never sells. Coins on your "never sell" list are always left alone.</p></div>
+  </div>
+  <div class="g2" style="margin-top:16px">
+    <div class="card"><h3>Built-in safety</h3><ul class="ck">
+      <li>Starts in <b>dry run</b>: shows what it would do, places nothing</li>
+      <li>Caps per order and per day - one bad tick can't spend your account</li>
+      <li>Refuses API keys that can withdraw funds</li><li>Never buys a coin within 10% of its all-time high</li></ul></div>
+    <div class="card"><h3>A full cockpit</h3><ul class="ck">
+      <li>Portfolio with average cost and profit per coin</li><li>Trade history with realized profit</li>
+      <li><b>Buy now</b> button for an extra top-up, same rules</li><li>Your own orders from the Trade tab, plus a news feed</li></ul></div>
+  </div>
+</section>
+
+<section id="where">
+  <h2>One app. Runs where you want.</h2><p class="sub">Same bot, same settings. Only the place it runs changes - and you can switch any time.</p>
+  <div class="g3 run">
+    <div class="card"><span class="tag">EASIEST</span><h3>Your PC</h3><p>Install, enter your Kraken key, done. The bot runs while TradeBot is open - fine for a PC that's on most of the day.</p></div>
+    <div class="card"><span class="tag best">24/7</span><h3>A small server</h3><p>One command on a cloud server that costs a few euros a month and it runs around the clock. Open the same app from your PC or phone.</p></div>
+    <div class="card"><span class="tag best">24/7 · ADVANCED</span><h3>Home Assistant</h3><p>Already run Home Assistant on a Pi? Add TradeBot as an add-on, with dashboard tiles and a "buy now" button.</p></div>
+  </div>
+  <p class="note">Windows today · Linux server · Home Assistant. Android is planned.</p>
+</section>
+
+<section id="pricing">
+  <h2>Early access</h2><p class="sub">The first <b>100 new Kraken users</b> who sign up through our link get the beta free. After the beta, one membership covers every way to run it.</p>
+  <div class="price">
+    <div class="card main"><span class="k">FREE BETA · FIRST 100</span><div class="amt">€0<span> during the beta</span></div>
+      <ol style="margin:12px 0 0;padding-left:20px;font-size:15px"><li>Open a new Kraken account <a class="todo" href="#">with our link</a></li><li>Install TradeBot and add your key - it confirms your account is new</li><li>Request your free beta licence in the app</li></ol>
+      <p class="note">Already on Kraken? Membership opens at launch: <span class="todo">€ — / year</span>.</p></div>
+    <div class="card" style="display:none"><span class="k">MEMBERSHIP</span><div class="amt todo">€ —<span> / year</span></div>
+      <ul class="ck"><li>Desktop app, server and Home Assistant</li><li>All updates during your membership</li><li>Custom coins, buy-only mode, buy now</li><li>Email support</li></ul>
+      <p style="margin-top:18px"><a class="btn todo" href="#">Join early access</a></p></div>
+    <div class="card"><span class="k">YOU NEED</span><ul class="ck" style="margin-top:0"><li>A Kraken account (spot)</li><li>A Kraken API key - the setup guide walks you through it</li><li>Windows 10/11, or a Linux server, or Home Assistant</li></ul>
+      <p class="note">No Kraken account yet? <a class="todo" href="#">Create one here</a> <span>(affiliate link - it supports TradeBot at no cost to you).</span></p></div>
+  </div>
+</section>
+
+<section id="faq">
+  <h2>Questions</h2>
+  <details><summary>Is this financial advice? Will I make money?</summary><p>No and no promises. TradeBot follows rules you can read and change. Crypto can fall a lot and you can lose money. Start with dry run and only invest what you can afford to leave alone for years.</p></details>
+  <details><summary>Can TradeBot take my money?</summary><p>No. You create a Kraken API key that can trade but <b>cannot withdraw</b> - the app checks this and refuses keys that can. The key is stored on your own machine and is never sent to us.</p></details>
+  <details><summary>Which exchanges are supported?</summary><p>Kraken spot today. More exchanges are planned based on demand.</p></details>
+  <details><summary>What does "heat" mean?</summary><p>How far today's price is above or below its 200-day average. Far below = cheap = buy more. Far above = hot = buy less or skip.</p></details>
+  <details><summary>Does my PC need to stay on?</summary><p>For the PC option, the bot runs while the app is open. Limit orders already placed stay on Kraken even if the PC is off. For true 24/7, use a small server or Home Assistant - same membership.</p></details>
+  <details><summary>Can I pick my own coins?</summary><p>Yes - any coin Kraken trades against USD, with your own weights. Bitcoin always stays as the market signal.</p></details>
+</section>
+
+<section style="border-top:0;padding-top:0"><div class="risk"><b>Your money, your risk.</b> TradeBot is software, not an investment service. It is not financial advice and does not promise returns. Past results and backtests do not predict future results. You are responsible for your settings, your account and your taxes.</div></section>
+</div>
+<footer><div class="w">© TradeBot · <a href="setup.html">Setup guide</a> · <a href="terms.html" class="todo">Terms</a> · Contact: <span class="todo">support@…</span></div></footer>
+</body></html>
